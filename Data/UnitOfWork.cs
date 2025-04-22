@@ -1,17 +1,26 @@
-﻿namespace MealPlannerApi.Data
+﻿using MealPlannerApi.Data.Entities;
+using MealPlannerApi.Data.Repository.IRepository;
+
+namespace MealPlannerApi.Data
 {
     public interface IUnitOfWork : IDisposable
     {
         Task<int> Save();
+        IRepository<UnitMeasure> UnitMeasureRepository { get; }
     }
 
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MealPlannerDbContext _context;
+        public IRepository<UnitMeasure> UnitMeasureRepository { get; private set; }
 
-        public UnitOfWork(MealPlannerDbContext context)
+        public UnitOfWork(
+                MealPlannerDbContext context,
+                IRepository<UnitMeasure> unitMeasureRepository
+            )
         {
             _context = context;
+            UnitMeasureRepository = unitMeasureRepository;
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();
