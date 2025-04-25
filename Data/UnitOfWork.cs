@@ -8,12 +8,14 @@ namespace MealPlannerApi.Data
     {
         Task<int> Save();
         IRepository<UnitMeasure> UnitMeasureRepository { get; }
+        IRepository<Ingredient> IngredientRepository { get; }
     }
 
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MealPlannerDbContext _context;
         public IRepository<UnitMeasure> UnitMeasureRepository { get; }
+        public IRepository<Ingredient> IngredientRepository { get; }
 
         public UnitOfWork(
                 MealPlannerDbContext context
@@ -21,6 +23,7 @@ namespace MealPlannerApi.Data
         {
             _context = context;
             UnitMeasureRepository = new UnitMeasureRepository(context);
+            IngredientRepository = new IngredientRepository(context);
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();

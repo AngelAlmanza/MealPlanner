@@ -8,6 +8,10 @@ namespace MealPlannerApi.AutoMappers
     {
         public MappingProfile()
         {
+            CreateMap<Ingredient, IngredientDto>()
+                .ForMember(dest => dest.UnitMeasure, opt => opt.MapFrom(src => src.UnitMeasure));
+            CreateMap<IngredientInsertDto, Ingredient>();
+            CreateMap<IngredientUpdateDto, Ingredient>();
             CreateMap<UnitMeasure, UnitMeasureDto>();
             CreateMap<UnitMeasureInsertDto, UnitMeasure>();
             CreateMap<UnitMeasureUpdateDto, UnitMeasure>();
