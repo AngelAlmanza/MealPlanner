@@ -1,9 +1,6 @@
 using FluentValidation;
 using MealPlannerApi.AutoMappers;
 using MealPlannerApi.Data;
-using MealPlannerApi.Data.Entities;
-using MealPlannerApi.Data.Repository;
-using MealPlannerApi.Data.Repository.IRepository;
 using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
 using MealPlannerApi.Validators;
