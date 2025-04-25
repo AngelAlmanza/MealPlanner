@@ -1,4 +1,5 @@
 ﻿using MealPlannerApi.Data.Entities;
+using MealPlannerApi.Data.Repository;
 using MealPlannerApi.Data.Repository.IRepository;
 
 namespace MealPlannerApi.Data
@@ -12,15 +13,14 @@ namespace MealPlannerApi.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MealPlannerDbContext _context;
-        public IRepository<UnitMeasure> UnitMeasureRepository { get; private set; }
+        public IRepository<UnitMeasure> UnitMeasureRepository { get; }
 
         public UnitOfWork(
-                MealPlannerDbContext context,
-                IRepository<UnitMeasure> unitMeasureRepository
+                MealPlannerDbContext context
             )
         {
             _context = context;
-            UnitMeasureRepository = unitMeasureRepository;
+            UnitMeasureRepository = new UnitMeasureRepository(context);
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();
