@@ -1,0 +1,29 @@
+﻿using FluentValidation;
+using MealPlannerApi.DTOs;
+
+namespace MealPlannerApi.Validators
+{
+    public class RecipeInsertValidator : AbstractValidator<RecipeInsertDto>
+    {
+        public RecipeInsertValidator()
+        {
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("Name is required.")
+                .Length(2, 255).WithMessage("Name must be between 2 and 255 characters.");
+            RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("Description is required.")
+                .Length(2, 1000).WithMessage("Description must be between 2 and 1000 characters.");
+            RuleFor(x => x.Servings)
+                .NotEmpty().WithMessage("Servings is required.")
+                .GreaterThan(0).WithMessage("Servings must be greater than 0.");
+            RuleFor(x => x.Url)
+                .Length(0, 1000).WithMessage("Url must be less than 1000 characters.")
+                .Matches(@"^(http|https)://").WithMessage("Url must start with http:// or https://")
+                .When(x => !string.IsNullOrEmpty(x.Url));
+            RuleFor(x => x.Ingredients)
+                .NotEmpty().WithMessage("Ingredients are required.")
+                .Must(x => x.Count > 0).WithMessage("At least one ingredient is required.")
+                .ForEach(ingredient => ingredient.SetValidator(new RecipeIngredientInsertValidator()));
+        }
+    }    
+}

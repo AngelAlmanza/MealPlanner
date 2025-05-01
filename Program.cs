@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICommonService<IngredientDto, IngredientInsertDto, IngredientUpdateDto>, IngredientService>();
+builder.Services.AddScoped<ICommonService<RecipeDto, RecipeInsertDto, RecipeUpdateDto>, RecipeService>();
 builder.Services.AddScoped<ICommonService<UnitMeasureDto, UnitMeasureInsertDto, UnitMeasureUpdateDto>, UnitMeasureService>();
 
 builder.Services.AddDbContext<MealPlannerDbContext>(options =>
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<MealPlannerDbContext>(options =>
 // Validators
 builder.Services.AddScoped<IValidator<IngredientInsertDto>, IngredientInsertValidator>();
 builder.Services.AddScoped<IValidator<IngredientUpdateDto>, IngredientUpdateValidator>();
+builder.Services.AddScoped<IValidator<RecipeInsertDto>, RecipeInsertValidator>();
+builder.Services.AddScoped<IValidator<RecipeUpdateDto>, RecipeUpdateValidator>();
 builder.Services.AddScoped<IValidator<UnitMeasureInsertDto>, UnitMeasureInsertValidator>();
 builder.Services.AddScoped<IValidator<UnitMeasureUpdateDto>, UnitMeasureUpdateValidator>();
 

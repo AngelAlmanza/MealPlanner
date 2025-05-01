@@ -14,24 +14,24 @@ namespace MealPlannerApi.Data.Repository
         }
 
         public async Task<IEnumerable<UnitMeasure>> Get()
-            => await _context.unitMeasures.ToListAsync();
+            => await _context.UnitMeasures.ToListAsync();
 
         public async Task<UnitMeasure> GetById(int id)
-            => await _context.unitMeasures.FindAsync(id);
+            => await _context.UnitMeasures.FindAsync(id);
 
         public async Task Add(UnitMeasure entity)
-            => await _context.unitMeasures.AddAsync(entity);
+            => await _context.UnitMeasures.AddAsync(entity);
 
         public void Update(UnitMeasure entity)
         {
-            _context.unitMeasures.Attach(entity);
+            _context.UnitMeasures.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Delete(UnitMeasure entity)
-            => _context.unitMeasures.Remove(entity);
+            => _context.UnitMeasures.Remove(entity);
 
         public IEnumerable<UnitMeasure> Search(Func<UnitMeasure, bool> filter)
-            => _context.unitMeasures.Where(filter).ToList();
+            => _context.UnitMeasures.Where(filter).ToList();
     }
 }

@@ -10,12 +10,12 @@ namespace MealPlannerApi.Data
         {
         }
 
-        public DbSet<UnitMeasure> unitMeasures { get; set; }
-        public DbSet<Ingredient> ingredients { get; set; }
-        public DbSet<Recipe> recipes { get; set; }
-        public DbSet<RecipeIngredient> recipeIngredients { get; set; }
-        public DbSet<MealPlanWeek> mealPlanWeeks { get; set; }
-        public DbSet<RecipeInstance> recipeInstances { get; set; }
-        public DbSet<MealPlanEntry> mealPlanEntries { get; set; }
+        public DbSet<UnitMeasure> UnitMeasures { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+        public DbSet<MealPlanWeek> MealPlanWeeks { get; set; }
+        public DbSet<RecipeInstance> RecipeInstances { get; set; }
+        public DbSet<MealPlanEntry> MealPlanEntries { get; set; }
     }
 }

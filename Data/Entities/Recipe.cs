@@ -22,5 +22,7 @@ namespace MealPlannerApi.Data.Entities
 
         [MaxLength(1000)]
         public string? Url { get; set; }
+        
+        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
     }
 }
