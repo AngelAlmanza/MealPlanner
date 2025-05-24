@@ -26,6 +26,11 @@ namespace MealPlannerApi.AutoMappers
             CreateMap<RecipeIngredientInsertDto, RecipeIngredient>();
             CreateMap<RecipeIngredientUpdateDto, RecipeIngredient>();
 
+            CreateMap<RecipeInstance, RecipeInstanceDto>()
+                .ForMember(dest => dest.Recipe, opt => opt.MapFrom(src => src.Recipe));
+            CreateMap<RecipeInstanceInsertDto, RecipeInstance>();
+            CreateMap<RecipeInstanceUpdateDto, RecipeInstance>();
+            
             CreateMap<UnitMeasure, UnitMeasureDto>();
             CreateMap<UnitMeasureInsertDto, UnitMeasure>();
             CreateMap<UnitMeasureUpdateDto, UnitMeasure>();

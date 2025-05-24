@@ -13,6 +13,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICommonService<IngredientDto, IngredientInsertDto, IngredientUpdateDto>, IngredientService>();
 builder.Services.AddScoped<ICommonService<MealPlanWeekDto, MealPlanWeekInsertDto, MealPlanWeekUpdateDto>, MealPlanWeekService>();
 builder.Services.AddScoped<ICommonService<RecipeDto, RecipeInsertDto, RecipeUpdateDto>, RecipeService>();
+builder.Services.AddScoped<ICommonService<RecipeInstanceDto, RecipeInstanceInsertDto, RecipeInstanceUpdateDto>, RecipeInstanceService>();
 builder.Services.AddScoped<ICommonService<UnitMeasureDto, UnitMeasureInsertDto, UnitMeasureUpdateDto>, UnitMeasureService>();
 
 builder.Services.AddDbContext<MealPlannerDbContext>(options =>
@@ -27,6 +28,8 @@ builder.Services.AddScoped<IValidator<MealPlanWeekInsertDto>, MealPlanWeekInsert
 builder.Services.AddScoped<IValidator<MealPlanWeekUpdateDto>, MealPlanWeekUpdateValidator>();
 builder.Services.AddScoped<IValidator<RecipeInsertDto>, RecipeInsertValidator>();
 builder.Services.AddScoped<IValidator<RecipeUpdateDto>, RecipeUpdateValidator>();
+builder.Services.AddScoped<IValidator<RecipeInstanceInsertDto>, RecipeInstanceInsertValidator>();
+builder.Services.AddScoped<IValidator<RecipeInstanceUpdateDto>, RecipeInstanceUpdateValidator>();
 builder.Services.AddScoped<IValidator<UnitMeasureInsertDto>, UnitMeasureInsertValidator>();
 builder.Services.AddScoped<IValidator<UnitMeasureUpdateDto>, UnitMeasureUpdateValidator>();
 
