@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
-using MealPlannerApi.Validators;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MealPlannerApi.Controllers
