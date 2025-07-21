@@ -15,7 +15,7 @@ namespace MealPlannerApi.Data.Entities
 
         [Required]
         [MaxLength(1000)]
-        public string Description { get; set; }
+        public string Instructions { get; set; }
 
         [Required]
         public int Servings { get; set; }

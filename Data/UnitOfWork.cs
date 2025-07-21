@@ -11,9 +11,6 @@ namespace MealPlannerApi.Data
         IRepository<Ingredient> IngredientRepository { get; }
         IRepository<Recipe> RecipeRepository { get; }
         IBulkInsertRepository<RecipeIngredient> RecipeIngredientRepository { get; }
-        IRepository<MealPlanWeek> MealPlanWeekRepository { get; }
-        IRepository<RecipeInstance> RecipeInstanceRepository { get; }
-        IMealEntryRepository MealPlanEntryRepository { get; }
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -23,9 +20,6 @@ namespace MealPlannerApi.Data
         public IRepository<Ingredient> IngredientRepository { get; }
         public IRepository<Recipe> RecipeRepository { get; }
         public IBulkInsertRepository<RecipeIngredient> RecipeIngredientRepository { get; }
-        public IRepository<MealPlanWeek> MealPlanWeekRepository { get; }
-        public IRepository<RecipeInstance> RecipeInstanceRepository { get; }
-        public IMealEntryRepository MealPlanEntryRepository { get; }
 
         public UnitOfWork(
                 MealPlannerDbContext context
@@ -35,10 +29,7 @@ namespace MealPlannerApi.Data
             UnitMeasureRepository = new UnitMeasureRepository(context);
             IngredientRepository = new IngredientRepository(context);
             RecipeRepository = new RecipeRepository(context);
-            RecipeIngredientRepository = new RecipeIngredientRepository(context);
-            MealPlanWeekRepository = new MealPlanWeekRepository(context);
-            RecipeInstanceRepository = new RecipeInstanceRepository(context);
-            MealPlanEntryRepository = new MealPlanEntryRepository(context);       
+            RecipeIngredientRepository = new RecipeIngredientRepository(context);  
         }
 
         public async Task<int> Save() => await _context.SaveChangesAsync();
