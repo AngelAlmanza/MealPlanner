@@ -13,6 +13,11 @@ namespace MealPlannerApi.AutoMappers
             CreateMap<IngredientInsertDto, Ingredient>();
             CreateMap<IngredientUpdateDto, Ingredient>();
             
+            CreateMap<MealPlanItem, MealPlanItemDto>()
+                .ForMember(dest => dest.Recipe, opt => opt.MapFrom(src => src.Recipe));
+            CreateMap<MealPlanItemInsertDto, MealPlanItem>();
+            CreateMap<MealPlanItemUpdateDto, MealPlanItem>();
+            
             CreateMap<Recipe, RecipeDto>()
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(src => src.RecipeIngredients));
             CreateMap<RecipeInsertDto, Recipe>();

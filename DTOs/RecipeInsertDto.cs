@@ -7,5 +7,5 @@
         public int Servings { get; set; }
         public string? Url { get; set; }
         public List<RecipeIngredientInsertDto> Ingredients { get; set; }
-    }   
+    }
 }
