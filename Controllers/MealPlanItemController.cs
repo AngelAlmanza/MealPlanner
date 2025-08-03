@@ -57,6 +57,7 @@ namespace MealPlannerApi.Controllers
             return CreatedAtAction(nameof(Get), new { id = mealPlanItemDto.Id }, mealPlanItemDto);
         }
 
+        [HttpPut("{id}")]
         public async Task<ActionResult<MealPlanItemDto>> Update(int id, MealPlanItemUpdateDto dto)
         {
             var validationResult = await _mealPlanItemUpdateDtoValidator.ValidateAsync(dto);
