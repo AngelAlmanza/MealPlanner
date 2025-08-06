@@ -5,6 +5,9 @@ using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
 using MealPlannerApi.Validators;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
