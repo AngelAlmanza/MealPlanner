@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MealPlannerApi.Controllers
@@ -25,10 +25,12 @@ namespace MealPlannerApi.Controllers
             _unitMeasureUpdateValidator = unitMeasureUpdateValidator;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<UnitMeasureDto>> Get()
             => await _service.Get();
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<UnitMeasureDto>> GetById(int id)
         {
@@ -40,6 +42,7 @@ namespace MealPlannerApi.Controllers
             return Ok(unitMeasure);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<UnitMeasureDto>> Create(UnitMeasureInsertDto unitMeasureInsertDto)
         {
@@ -57,6 +60,7 @@ namespace MealPlannerApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = unitMeasureDto.Id }, unitMeasureDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<UnitMeasureDto>> Update(int id, UnitMeasureUpdateDto unitMeasureUpdateDto)
         {
@@ -74,6 +78,7 @@ namespace MealPlannerApi.Controllers
             return Ok(unitMeasureDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UnitMeasureDto>> Delete(int id)
         {

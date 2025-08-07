@@ -2,6 +2,7 @@
 using AutoMapper;
 using MealPlannerApi.Data;
 using MealPlannerApi.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -23,6 +24,7 @@ namespace MealPlannerApi.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("generatePdf")]
         public async Task<IActionResult> GeneratePdf(GeneratePdfRequestDto dto)
         {

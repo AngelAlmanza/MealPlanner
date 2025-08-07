@@ -1,15 +1,41 @@
+using System.Text;
 using FluentValidation;
 using MealPlannerApi.AutoMappers;
 using MealPlannerApi.Data;
 using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
 using MealPlannerApi.Validators;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
 
 QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// JWT
+var jwtKey = builder.Configuration["Jwt:Key"];
+var key = Encoding.ASCII.GetBytes(jwtKey);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+builder.Services.AddAuthorization();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -38,6 +64,7 @@ builder.Services.AddDbContext<MealPlannerDbContext>(options =>
 // Validators
 builder.Services.AddScoped<IValidator<IngredientInsertDto>, IngredientInsertValidator>();
 builder.Services.AddScoped<IValidator<IngredientUpdateDto>, IngredientUpdateValidator>();
+builder.Services.AddScoped<IValidator<LoginDto>, LoginValidator>();
 builder.Services.AddScoped<IValidator<MealPlanItemInsertDto>, MealPlanItemInsertValidator>();
 builder.Services.AddScoped<IValidator<MealPlanItemUpdateDto>, MealPlanItemUpdateValidator>();
 builder.Services.AddScoped<IValidator<RecipeInsertDto>, RecipeInsertValidator>();
@@ -69,6 +96,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("FrontendPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

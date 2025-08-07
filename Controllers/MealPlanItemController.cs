@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MealPlannerApi.DTOs;
 using MealPlannerApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MealPlannerApi.Controllers
@@ -24,10 +25,12 @@ namespace MealPlannerApi.Controllers
             _mealPlanItemUpdateDtoValidator = mealPlanItemUpdateDtoValidator;
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IEnumerable<MealPlanItemDto>> Get()
             => await _service.Get();
         
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<MealPlanItemDto>> Get(int id)
         {
@@ -39,6 +42,7 @@ namespace MealPlannerApi.Controllers
             return Ok(mealPlanItem);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<MealPlanItemDto>> Create(MealPlanItemInsertDto dto)
         {
@@ -57,6 +61,7 @@ namespace MealPlannerApi.Controllers
             return CreatedAtAction(nameof(Get), new { id = mealPlanItemDto.Id }, mealPlanItemDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<MealPlanItemDto>> Update(int id, MealPlanItemUpdateDto dto)
         {
@@ -79,6 +84,7 @@ namespace MealPlannerApi.Controllers
             return Ok(mealPlanItemDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<MealPlanItemDto>> Delete(int id)
         {
