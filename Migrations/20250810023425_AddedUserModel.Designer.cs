@@ -4,6 +4,7 @@ using MealPlannerApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MealPlannerApi.Migrations
 {
     [DbContext(typeof(MealPlannerDbContext))]
-    partial class MealPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250810023425_AddedUserModel")]
+    partial class AddedUserModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,38 +46,6 @@ namespace MealPlannerApi.Migrations
                     b.HasIndex("UnitMeasureId");
 
                     b.ToTable("Ingredients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Avena",
-                            UnitMeasureId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Cebolla",
-                            UnitMeasureId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Tomate",
-                            UnitMeasureId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Chile Serrano",
-                            UnitMeasureId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Brocoli",
-                            UnitMeasureId = 3
-                        });
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanItem", b =>
@@ -178,32 +149,6 @@ namespace MealPlannerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UnitMeasures");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Abbreviation = "G",
-                            Name = "Gramos"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Abbreviation = "U",
-                            Name = "Unidades"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Abbreviation = "PZS",
-                            Name = "Piezas"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Abbreviation = "KG",
-                            Name = "Kilogramos"
-                        });
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.User", b =>
@@ -225,14 +170,6 @@ namespace MealPlannerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "almanza.angel245@gamil.com",
-                            Password = "$2a$11$LvQhB28R7IFhEo2L7LtA/.ZXXbJR4j8zNkQeHrExaZ6MXV8cyb8GC"
-                        });
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.Ingredient", b =>
