@@ -12,7 +12,7 @@ namespace MealPlannerApi.Data.Seeds
                 new User
                 {
                     Id = 1,
-                    Email = "almanza.angel245@gamil.com",
+                    Email = "almanza.angel245@gmail.com",
                     Password = "$2a$11$LvQhB28R7IFhEo2L7LtA/.ZXXbJR4j8zNkQeHrExaZ6MXV8cyb8GC"
                 }
             );

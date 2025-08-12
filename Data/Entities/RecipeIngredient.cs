@@ -22,7 +22,7 @@ namespace MealPlannerApi.Data.Entities
         public virtual Ingredient Ingredient { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18, 2)")]
+        [Column(TypeName = "decimal(10, 2)")]
         public decimal Quantity { get; set; }
     }
 }

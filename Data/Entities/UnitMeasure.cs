@@ -16,8 +16,5 @@ namespace MealPlannerApi.Data.Entities
         [Required]
         [MaxLength(10)]
         public string Abbreviation { get; set; }
-
-        // Navigation properties
-        // public virtual ICollection<Ingredient> Ingredients { get; set; } = new HashSet<Ingredient>();
     }
 }

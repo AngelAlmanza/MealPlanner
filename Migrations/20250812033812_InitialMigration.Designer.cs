@@ -12,18 +12,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MealPlannerApi.Migrations
 {
     [DbContext(typeof(MealPlannerDbContext))]
-    [Migration("20250501212531_AddedRecipeIngredientsToRecipeModel")]
-    partial class AddedRecipeIngredientsToRecipeModel
+    [Migration("20250812033812_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.Ingredient", b =>
                 {
@@ -31,12 +31,12 @@ namespace MealPlannerApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("UnitMeasureId")
                         .HasColumnType("int");
@@ -46,61 +46,62 @@ namespace MealPlannerApi.Migrations
                     b.HasIndex("UnitMeasureId");
 
                     b.ToTable("Ingredients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Avena",
+                            UnitMeasureId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Cebolla",
+                            UnitMeasureId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tomate",
+                            UnitMeasureId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Chile Serrano",
+                            UnitMeasureId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Brocoli",
+                            UnitMeasureId = 3
+                        });
                 });
 
-            modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanEntry", b =>
+            modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MealPlanWeekId")
-                        .HasColumnType("int");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("MealType")
                         .HasColumnType("int");
 
-                    b.Property<int>("RecipeInstanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServingsUsed")
+                    b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MealPlanWeekId");
+                    b.HasIndex("RecipeId");
 
-                    b.HasIndex("RecipeInstanceId");
-
-                    b.ToTable("MealPlanEntries");
-                });
-
-            modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanWeek", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MealPlanWeeks");
+                    b.ToTable("MealPlanItems");
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.Recipe", b =>
@@ -109,24 +110,24 @@ namespace MealPlannerApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Instructions")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("varchar(1000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("Servings")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -139,13 +140,13 @@ namespace MealPlannerApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18, 2)");
+                        .HasColumnType("decimal(10, 2)");
 
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
@@ -159,52 +160,84 @@ namespace MealPlannerApi.Migrations
                     b.ToTable("RecipeIngredients");
                 });
 
-            modelBuilder.Entity("MealPlannerApi.Data.Entities.RecipeInstance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalServings")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("RecipeInstances");
-                });
-
             modelBuilder.Entity("MealPlannerApi.Data.Entities.UnitMeasure", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("UnitMeasures");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Abbreviation = "G",
+                            Name = "Gramos"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Abbreviation = "U",
+                            Name = "Unidades"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Abbreviation = "PZS",
+                            Name = "Piezas"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Abbreviation = "KG",
+                            Name = "Kilogramos"
+                        });
+                });
+
+            modelBuilder.Entity("MealPlannerApi.Data.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "almanza.angel245@gmail.com",
+                            Password = "$2a$11$LvQhB28R7IFhEo2L7LtA/.ZXXbJR4j8zNkQeHrExaZ6MXV8cyb8GC"
+                        });
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.Ingredient", b =>
@@ -218,23 +251,15 @@ namespace MealPlannerApi.Migrations
                     b.Navigation("UnitMeasure");
                 });
 
-            modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanEntry", b =>
+            modelBuilder.Entity("MealPlannerApi.Data.Entities.MealPlanItem", b =>
                 {
-                    b.HasOne("MealPlannerApi.Data.Entities.MealPlanWeek", "MealPlanWeek")
+                    b.HasOne("MealPlannerApi.Data.Entities.Recipe", "Recipe")
                         .WithMany()
-                        .HasForeignKey("MealPlanWeekId")
+                        .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MealPlannerApi.Data.Entities.RecipeInstance", "RecipeInstance")
-                        .WithMany()
-                        .HasForeignKey("RecipeInstanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MealPlanWeek");
-
-                    b.Navigation("RecipeInstance");
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("MealPlannerApi.Data.Entities.RecipeIngredient", b =>
@@ -252,17 +277,6 @@ namespace MealPlannerApi.Migrations
                         .IsRequired();
 
                     b.Navigation("Ingredient");
-
-                    b.Navigation("Recipe");
-                });
-
-            modelBuilder.Entity("MealPlannerApi.Data.Entities.RecipeInstance", b =>
-                {
-                    b.HasOne("MealPlannerApi.Data.Entities.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Recipe");
                 });

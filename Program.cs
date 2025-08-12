@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 QuestPDF.Settings.License = LicenseType.Community;
 
@@ -58,7 +59,10 @@ builder.Services.AddScoped<ICommonService<UnitMeasureDto, UnitMeasureInsertDto, 
 
 builder.Services.AddDbContext<MealPlannerDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MealPlannerConnection"));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("MealPlannerConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("MealPlannerConnection"))
+    );
 });
 
 // Validators
