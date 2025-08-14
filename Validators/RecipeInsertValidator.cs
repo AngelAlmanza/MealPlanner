@@ -10,9 +10,9 @@ namespace MealPlannerApi.Validators
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Name is required.")
                 .Length(2, 255).WithMessage("Name must be between 2 and 255 characters.");
-            RuleFor(x => x.Description)
-                .NotEmpty().WithMessage("Description is required.")
-                .Length(2, 1000).WithMessage("Description must be between 2 and 1000 characters.");
+            RuleFor(x => x.Instructions)
+                .NotEmpty().WithMessage("Instructions is required.")
+                .Length(2, 1000).WithMessage("Instructions must be between 2 and 1000 characters.");
             RuleFor(x => x.Servings)
                 .NotEmpty().WithMessage("Servings is required.")
                 .GreaterThan(0).WithMessage("Servings must be greater than 0.");
